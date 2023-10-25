@@ -4,15 +4,18 @@ public class MathGame {
 
     private Player player1;
     private Player player2;
+
+    private Player player3;
     private Player currentPlayer;
     private Player winner;
     private boolean gameOver;
     private Scanner scanner;
 
     // create MathGame object
-    public MathGame(Player player1, Player player2, Scanner scanner) {
+    public MathGame(Player player1, Player player2, Player player3, Scanner scanner) {
         this.player1 = player1;
         this.player2 = player2;
+        this.player3 = player3;
         this.scanner = scanner;
         currentPlayer = null; // will get assigned at start of game
         winner = null; // will get assigned when a Player wins
@@ -47,10 +50,23 @@ public class MathGame {
 
     // prints the current scores of the two players
     private void printGameState() {
+        String lead = "";
         System.out.println("--------------------------------------");
         System.out.println("Current Scores:");
         System.out.println(player1.getName() + ": " + player1.getScore());
         System.out.println(player2.getName() + ": " + player2.getScore());
+        System.out.println(player3.getName() + ": " + player3.getScore());
+        if (player1.getScore() > player2.getScore()) {
+            if(player1.getScore() > player3.getScore()) {
+                lead = player1.getName();
+            } else {
+                lead = player3.getName();
+            }
+        } else if (player2.getScore() > player3.getScore()) {
+            lead = player2.getName();
+        } else {
+            lead = player3.getName();
+        }
         System.out.println("--------------------------------------");
     }
 
@@ -58,6 +74,7 @@ public class MathGame {
     public void resetGame() {
         player1.reset(); // this method resets the player
         player2.reset();
+        player3.reset();
         gameOver = false;
         currentPlayer = null;
         winner = null;
@@ -67,11 +84,13 @@ public class MathGame {
 
     // randomly chooses one of the Player objects to be the currentPlayer
     private void chooseStartingPlayer() {
-        int randNum = (int) (Math.random() * 2) + 1;
+        int randNum = (int) (Math.random() * 3) + 1;
         if (randNum == 1) {
             currentPlayer = player1;
-        } else {
+        } else if (randNum == 2) {
             currentPlayer = player2;
+        } else {
+            currentPlayer = player3;
         }
     }
 
@@ -116,6 +135,16 @@ public class MathGame {
             currentPlayer = player2;
         } else {
             currentPlayer = player1;
+        }
+        if (currentPlayer == player2) {
+            currentPlayer = player3;
+        } else {
+            currentPlayer = player2;
+        }
+        if (currentPlayer == player3) {
+            currentPlayer = player1;
+        } else {
+            currentPlayer = player3;
         }
     }
 
