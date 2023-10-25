@@ -67,6 +67,7 @@ public class MathGame {
         } else {
             lead = player3.getName();
         }
+        System.out.println(lead + " is in the lead!");
         System.out.println("--------------------------------------");
     }
 
